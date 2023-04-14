@@ -1,220 +1,65 @@
-// width - 10 pixels
-// height - 15 pixels
-
 #include <bits/stdc++.h>
 #include <graphics.h>
-
 using namespace std;
-int max_x;
-int max_y;
 
-int x = 0, y = 0;
+int maxWidth = 10, maxHeight = 15; // in Pixels
+const int pxSize = 30;
+const int B = COLOR(96, 150, 230), Y = YELLOW, G = DARKGRAY, BL = BLACK, W = WHITE;
+// Leave Top & Left Margin = 1 px
+int x = pxSize, y = pxSize;
 
-void inc() {
-    x += 10;
-    if(x == 110) {
-        x = 0;
-        y += 10;
-    }
+void nextPixel(int len = 1) {
+    x += len * pxSize;
+    // maxWidth = margin + maxWidth
+    if(x == (maxWidth + 1) * pxSize) x = pxSize, y += pxSize;
 }
 
-#define CYAN COLOR(96,150,230)
-
-void make(int COL) {
+void drawPx(int COL, int len = 1) {
     setcolor(COL);
-    rectangle(x, y, x + 9, y + 9);
+    rectangle(x, y, x + len * pxSize - 1, y + pxSize - 1);
     setfillstyle(SOLID_FILL, COL);
     floodfill(x + 1, y + 1, COL);
-    inc();
+    nextPixel(len);
 }
 
-
-
 int main() {
-    initwindow(200, 200);
+    // BG Settings
+    // +2 for margins
+    initwindow(pxSize * (maxWidth + 2), pxSize * (maxHeight + 2));
+    setfillstyle(SOLID_FILL, LIGHTRED);
     floodfill(1, 1, WHITE);
-    
-    for(int i = 0; i < 11; ++i) inc();
 
-    inc();
-    inc();
-    inc();
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    inc();
-    inc();
-    
-    inc();
-    inc();
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(DARKGRAY);
-    make(DARKGRAY);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    inc();
-    
-    inc();
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(DARKGRAY);
-    make(WHITE);
-    make(WHITE);
-    make(DARKGRAY);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
+    // image = {line1, line2, ...}, line = {{Color1, width1}, ...}
+    // if value == -1, then call nextPixel()
+    vector<vector<pair<int, int>>> image = {
+        {{-1, 2}, {Y, 6}, {-1, 2}},
+        {{-1, 1}, {Y, 3}, {G, 2}, {Y, 3}, {-1, 1}},
+        {{Y, 3}, {G, 1}, {W, 2}, {G, 1}, {Y, 3}},
+        {{BL, 2}, {G, 1}, {W, 1}, {BL, 2}, {W, 1}, {G, 1}, {BL, 2}},
+        {{BL, 2}, {G, 1}, {W, 1}, {BL, 2}, {W, 1}, {G, 1}, {BL, 2}},
+        {{Y, 3}, {G, 1}, {W, 2}, {G, 1}, {Y, 3}},
+        {{Y, 4}, {G, 2}, {Y, 4}},
+        {{Y, 10}},
+        {{B, 1}, {Y, 8}, {B, 1}},
+        {{Y, 1}, {B, 1}, {Y, 6}, {B, 1}, {Y, 1}},
+        {{Y, 2}, {B, 6}, {Y, 2}},
+        {{Y, 2}, {B, 6}, {Y, 2}},
+        {{Y, 1}, {B, 8}, {Y, 1}},
+        {{-1, 1}, {B, 8}, {-1, 1}},
+        {{-1, 2}, {BL, 6}, {-1, 2}}
+    };
 
-    inc();
-    make(BLACK);
-    make(BLACK);
-    make(DARKGRAY);
-    inc();
-    make(BLACK);
-    make(BLACK);
-    inc();
-    make(DARKGRAY);
-    make(BLACK);
-    make(BLACK);
+    // Drawing the defined line
+    for(auto &line: image) {
+        for(auto &element: line) {
+            if(element.first == -1) {
+                nextPixel(element.second);
+            } else {
+                drawPx(element.first, element.second);
+            }
+        }
+    }
 
-
-    inc();
-    make(BLACK);
-    make(BLACK);
-    make(DARKGRAY);
-    inc();
-    make(BLACK);
-    make(BLACK);
-    inc();
-    make(DARKGRAY);
-    make(BLACK);
-    make(BLACK);
-
-    inc();
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(DARKGRAY);
-    inc(); 
-    inc();
-    make(DARKGRAY);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-
-    inc();
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(DARKGRAY);
-    make(DARKGRAY);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-
-    inc();
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);    
-    make(YELLOW);
-    make(YELLOW);
-
-    inc();
-    make(CYAN);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(CYAN);
-
-    inc();
-    make(YELLOW);
-    make(CYAN);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(YELLOW);
-    make(CYAN);
-    make(YELLOW);
-
-    inc();
-    make(YELLOW);
-    make(YELLOW);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(YELLOW);
-    make(YELLOW);
-
-    inc();
-    make(YELLOW);
-    make(YELLOW);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(YELLOW);
-    make(YELLOW);
-
-    inc();
-    make(YELLOW);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(YELLOW);
-
-    inc();
-    inc();
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    make(CYAN);
-    inc();
-
-    inc();
-    inc();
-    inc();
-    make(BLACK);
-    make(BLACK);
-    make(BLACK);
-    make(BLACK);
-    make(BLACK);
-    make(BLACK);
-    inc();
-    inc();
+    // So image doesnt disappear without character input
     getch();
 }
