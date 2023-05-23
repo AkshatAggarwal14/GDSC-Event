@@ -1,7 +1,7 @@
 # GDSC Event
 
 Screenshot:
-![screenshot](./ss.png)
+![screenshot](./screenshot.png)
 
 By:
 Akshat Aggarwal
